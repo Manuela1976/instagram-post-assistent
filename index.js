@@ -75,7 +75,14 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    setPost(getTodayPost());
+    const today = new Date().toDateString();
+    const lastSeen = localStorage.getItem("lastSeenDate");
+
+    if (today !== lastSeen) {
+      const todayPost = getTodayPost();
+      setPost(todayPost);
+      localStorage.setItem("lastSeenDate", today);
+    }
   }, []);
 
   const copyToClipboard = () => {
