@@ -54,11 +54,13 @@ const posts = [
 ];
 
 const getTodayPost = () => {
-  const day = new Date().getDay();
-  if (![1, 3, 5].includes(day)) return null;
+  const now = new Date();
+  const localDay = new Date(now.getTime() - now.getTimezoneOffset() * 60000).getDay();
+
+  if (![1, 3, 5].includes(localDay)) return null;
 
   // Freitag = immer Familie
-  if (day === 5) {
+  if (localDay === 5) {
     const familyPost = posts.find(p => p.category === "Familie");
     return familyPost || null;
   }
